@@ -1,1 +1,3 @@
-Web应用程序——学习笔记。
+Web app: learning_log
+
+use python.django
