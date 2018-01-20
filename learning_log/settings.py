@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #第三方应用程序
+    'bootstrap3',
+
+
     #我的
     'learning_logs',
     'users',
@@ -109,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -123,6 +127,30 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 #my own settings
 LOGIN_URL='/users/login/'
+
+#django-strap3的设置
+BOOTSTRAP3={
+    'include_jquery':True,
+}
+
+
+#Heroku设置
+if os.getcwd()=='/app':
+    import dj_database_url
+    DATABASES={
+        'default':dj_database_url.config(default='postgres://localhost')
+    }
+
+    #让request.is_secure()承认X-Forwarded-Proto头
+    SECURRE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO','https')
+
+    #支持所有主机头
+    ALLOWED_HOSTS=['*']
+    #静态资产配置
+    BASE_DIR=os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT='staticfiles'
+    STATICFILES_DIRS=(
+        os.path.join(BASE_DIR,'static'),
+    )
